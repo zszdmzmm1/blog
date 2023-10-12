@@ -1,5 +1,113 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.auefly.dao.BlogMapper">
+    <sql id="postsIntroduction">
+        select pid,
+               user_id,
+               title,
+               cover,
+               description,
+               publish_time,
+               last_update_time,
+               view,
+               uid,
+               name
+        from post
+                 left join user on user_id = uid
+    </sql>
+
+    <resultMap id="postAssociationToUser" type="Post" autoMapping="true">
+        <association property="user" javaType="User" autoMapping="true"/>
+    </resultMap>
+
+    <insert id="addPost" keyProperty="pid" useGeneratedKeys="true">
+        insert into post (user_id, title, cover, content, view, description, status)
+        values (#{userId}, #{title}, #{cover}, #{content}, #{view}, #{description}, #{status})
+    </insert>
+
+    <update id="updatePost">
+        update post
+        <set>
+            <if test="title != null and title != ''">
+                title = #{title},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="lastUpdateTime != null and lastUpdateTime != ''">
+                last_update_time = #{lastUpdateTime},
+            </if>
+            <if test="status != 0">
+                status = #{status},
+            </if>
+        </set>
+        where pid = #{pid};
+    </update>
+
+    <delete id="deletePosts">
+        delete from post where pid in
+        <foreach collection="arg0" separator="," open="(" close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectPostsForIndexPage" resultMap="postAssociationToUser">
+        <include refid="postsIntroduction"/>
+        limit #{offset}, #{rowCount};
+    </select>
+
+    <select id="selectPostById" resultMap="postAssociationToUser">
+        select pid,
+               user_id,
+               title,
+               publish_time,
+               last_update_time,
+               content,
+               view,
+               uid,
+               name
+        from post
+                 left join user on user_id = uid
+        where pid = #{id};
+    </select>
+
+    <select id="selectPostsByConditions" resultMap="postAssociationToUser">
+        <include refid="postsIntroduction"/>
+        <where>
+            <if test="post.status != 0">
+                and status = #{status}
+            </if>
+            <if test="post.title != null and post.title != ''">
+                and title like '%${post.title}%'
+            </if>
+            <if test="post.content != null and post.content != ''">
+                and content like '%${post.content}%'
+            </if>
+            <if test="post.user != null and post.user != ''">
+                and name like '%${post.user.name}%'
+            </if>
+        </where>
+        limit #{offset}, #{rowCount};
+    </select>
+
+    <select id="selectPostsByUserId" resultMap="postAssociationToUser">
+        select pid,
+               user_id,
+               title,
+               cover,
+               description,
+               publish_time,
+               last_update_time,
+               view
+        from post where user_id = #{id};
+    </select>
+
+    <select id="selectAllUsers" resultType="User">
+        select *
+        from user;
+    </select>
 
 </mapper>

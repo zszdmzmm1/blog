@@ -1,5 +1,6 @@
 package com.auefly.config.mybatis;
 
+import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.mapper.MapperScannerConfigurer;
@@ -13,6 +14,10 @@ public class MybatisConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
         sqlSessionFactoryBean.setTypeAliasesPackage("com.auefly.pojo");
+
+        Configuration configuration = new Configuration();
+        configuration.setMapUnderscoreToCamelCase(true);
+        sqlSessionFactoryBean.setConfiguration(configuration);
         return sqlSessionFactoryBean.getObject();
     }
 
