@@ -110,3 +110,14 @@
    4. 适时的加入事务，在Service层的接口类给需要开启事务的方法标注@Transactional注解————在接口处是为了未来所有的实现类无需重复标注。并在注入service实现类的config类开启事务：
       
       ![img_16.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_16.png)
+   5. 不是所有的数据都需要传给前端，而有些数据需要验证但是不宜显示，由此，我们通过在属性上添加一些注解来满足要求：
+      ```text
+         @JsonIgnore: 隐藏
+         @JsonProperties(access = JsonProperty.Access.WRITE_ONLY): 只允许写入，不允许读取（以属性的视角）
+         @JsonInclude(JsonInclude.Include.NON_NULL): 只有在非空时才会被启用
+      ```
+   6. 添加这样一个类：
+   
+      ![img_17.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_17.png)
+   
+      其利用了aop，在报错时截取，并将信息发给前端。
