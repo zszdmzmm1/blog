@@ -71,3 +71,23 @@
    3. 最后，我们在RootConfig中引入这两个配置类，指定包下的mapper就被成功注入容器：
       
       ![img_10.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_10.png)
+3. 至此，spring, spring-mvc 和 mybatis 被整合在了一起，接下来，我们要去实现具体的功能。 
+#### 功能的逐步实现
+1. 首先，基于对各个页面和servlet所需的数据的初步设想与构思，我写了一些dao层的实现方法以及测试类，进行了一些基本的增删改查，这是一个仍需后续反馈的版本，但不妨对写完后的体会和要点稍加介绍。
+   1. 在多表连接查询时，column的值出现重复是几乎不可避免的结果，尤其是各个表都有id字段。解决办法有很多，最直接有效的方法是给字段起别名，繁琐部分可以利用 `<sql></sql>` 和 `<include/>` 两个标签提出重复利用。也可以利用分步查询从根本上规避这种问题。在本次搭建中，从头到尾由本人掌握，故选择了从最开始就规避起相同的字段。
+   2. 在MySql中，命名多用下划线命名法，java中则用驼峰命名法。所以在识别时会出现无法对应的情况，这同样有两个解决办法，一是在 `<resultMap></resultMap>` 中指定配对关系，但有更便捷的方式：
+      
+      ![img_11.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_11.png)
+   
+      配合 `<ressultMap></resultMap>` 的autoMapping属性，代码得以变得十分简洁，例：
+
+      ![img_12.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_12.png)
+
+      标红系 MyBatisX 插件的识别问题，实际并无错误。
+   3. 在批量删除中方法中：
+      
+      ![img_13.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_13.png)
+
+      当传入的数据是数组时，在下图中的collection可以等于array， 当传入的是List时，可以等于list，但二者不可兼容，实际上可以直接用arg0来接，可以适配两种情况，用@Param()指定名字同理。
+      
+      ![img_14.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_14.png)
