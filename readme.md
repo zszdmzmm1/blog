@@ -72,7 +72,7 @@
       
       ![img_10.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_10.png)
 3. 至此，spring, spring-mvc 和 mybatis 被整合在了一起，接下来，我们要去实现具体的功能。 
-#### 功能的逐步实现
+#### 功能的初步实现
 1. 首先，基于对各个页面和servlet所需的数据的初步设想与构思，我写了一些dao层的实现方法以及测试类，进行了一些基本的增删改查，这是一个仍需后续反馈的版本，但不妨对写完后的体会和要点稍加介绍。
    1. 在多表连接查询时，column的值出现重复是几乎不可避免的结果，尤其是各个表都有id字段。解决办法有很多，最直接有效的方法是给字段起别名，繁琐部分可以利用 `<sql></sql>` 和 `<include/>` 两个标签提出重复利用。也可以利用分步查询从根本上规避这种问题。在本次搭建中，从头到尾由本人掌握，故选择了从最开始就规避起相同的字段。
    2. 在MySql中，命名多用下划线命名法，java中则用驼峰命名法。所以在识别时会出现无法对应的情况，这同样有两个解决办法，一是在 `<resultMap></resultMap>` 中指定配对关系，但有更便捷的方式：
@@ -91,3 +91,22 @@
       当传入的数据是数组时，在下图中的collection可以等于array， 当传入的是List时，可以等于list，但二者不可兼容，实际上可以直接用arg0来接，可以适配两种情况，用@Param()指定名字同理。
       
       ![img_14.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_14.png)
+2. 接下来则要完成servlet层与service的初步构建。
+   1. 首先引入一个依赖：
+      ```xml
+      <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.15.2</version>
+      </dependency>
+      ```
+      这个依赖在前后端传输数据时将json与其他类型自动相互转换，并提供隐藏字段，满足条件隐藏字段等注解。
+   2. spring-mvc框架下的servlet层只有一个servlet，即dispatcher servlet，它接管一切url，再将url与@Controller下的@requestMapping()的url匹配，交给对应的方法处理，进入service层。 service层再调用dao层的方法，完成一个个功能的实现。
+   3. 为了与前端更方便的交流，遂将发送到前端的返回值统一成一个类，其分为code, msg 和 data 三个属性：
+      
+      ![img_15.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_15.png)
+       
+      通过前两个属性的值，前端可以做出相应的动作，而最后一个属性data则是用来存储原本需要存储的主体信息。
+   4. 适时的加入事务，在Service层的接口类给需要开启事务的方法标注@Transactional注解————在接口处是为了未来所有的实现类无需重复标注。并在注入service实现类的config类开启事务：
+      
+      ![img_16.png](src%2Fmain%2Fwebapp%2Fimage%2Fmd%2Fimg_16.png)
