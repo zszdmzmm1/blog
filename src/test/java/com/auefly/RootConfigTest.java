@@ -20,7 +20,7 @@ public class RootConfigTest {
     @Test
     @DisplayName("初始化测试，判断postService组件是否被注入")
     public void initialTest(){
-        Assertions.assertTrue(ac.containsBean("postService"));
+        Assertions.assertTrue(ac.containsBean("blogService"));
     }
 
     @Test

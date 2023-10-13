@@ -16,6 +16,6 @@ public class WebConfigTest {
     @Test
     @DisplayName("初始化测试，判断postController组件是否被注入")
     public void initialTest(){
-        Assertions.assertTrue(ac.containsBean("postController"));
+        Assertions.assertTrue(ac.containsBean("blogController"));
     }
 }
