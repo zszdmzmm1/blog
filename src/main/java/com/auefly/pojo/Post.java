@@ -1,5 +1,6 @@
 package com.auefly.pojo;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 @Data
@@ -15,5 +16,6 @@ public class Post {
     private int status;
     private int view;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private User user;
 }
