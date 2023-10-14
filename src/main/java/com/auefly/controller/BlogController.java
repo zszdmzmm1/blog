@@ -6,6 +6,7 @@ import com.auefly.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
@@ -18,9 +19,9 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping("posts")
-    @ResponseBody
-    public R index(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "4") int perPage) {
-        return R.ok(blogService.index(page, perPage));
+    public String index(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "4") int perPage, Model model) {
+        model.addAttribute("msg", R.ok(blogService.index(page, perPage)));
+        return "forward:page/posts.jsp";
     }
 
     @PostMapping("posts")
@@ -30,11 +31,10 @@ public class BlogController {
     }
 
     @GetMapping("posts/{id}")
-    @ResponseBody
-    public R show(@PathVariable int id) {
-        return R.ok(blogService.show(id));
+    public String show(@PathVariable int id, Model model) {
+        model.addAttribute("msg", R.ok(blogService.show(id)));
+        return "forward:/page/posts-show.jsp";
     }
-
 
     @PutMapping("posts/{id}")
     @ResponseBody

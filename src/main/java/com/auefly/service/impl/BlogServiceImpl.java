@@ -3,6 +3,7 @@ package com.auefly.service.impl;
 import com.auefly.dao.BlogMapper;
 import com.auefly.pojo.Post;
 import com.auefly.service.BlogService;
+import com.auefly.util.MarkdownFraser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int store(Post post) {
+        String mdContent = post.getContent();
+        String htmlContent = MarkdownFraser.fraser(mdContent);
+        post.setContent(htmlContent);
         return mapper.addPost(post);
     }
 
