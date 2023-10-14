@@ -1,0 +1,16 @@
+{
+  "scripts": {
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "sass": "^1.64.1",
+    "vite": "^4.4.7"
+  },
+  "dependencies": {
+    "admin-lte": "3.2",
+    "animate.css": "^4.1.1",
+    "bootstrap": "^5.3.0",
+    "jquery": "^3.7.0",
+    "tocbot": "^4.21.1"
+  }
+}
