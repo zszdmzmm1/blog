@@ -24,4 +24,8 @@ public interface BlogMapper {
     int deletePosts(List<Integer> ids);
 
     List<Post> selectPostsByUserId(int id);
+
+    User selectUsersByEmail(String email);
+
+    User selectUsersById();
 }

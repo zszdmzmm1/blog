@@ -110,4 +110,12 @@
         from user;
     </select>
 
+    <select id="selectUsersByEmail" resultType="User">
+        select * from user  where email = #{email};
+    </select>
+
+    <select id="selectUsersById" resultType="User">
+        select * from user where uid = #{id};
+    </select>
+
 </mapper>
