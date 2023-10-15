@@ -23,6 +23,7 @@
         <!--            导航栏-->
         <jsp:include page="partials/header.jsp"/>
     </header>
+
     <div class="container" id="main_content">
         <div class="mx-lg-auto">
             <div class="row">
@@ -75,6 +76,9 @@
             </div>
         </div>
     </div>
+    <button class="position-absolute top-50 end-0 rounded-circle btn btn-danger" id="add-post">
+        <span class="display-5">+</span>
+    </button>
     <%@ include file="./partials/footer.jsp" %>
     <script src="build/assets/app.js"></script>
     <script>
@@ -88,6 +92,18 @@
                 page = parseInt($(this).text());
             }
             window.location.href = "posts?page=" + page;
+        })
+
+        $("#add-post").click(function () {
+            if ($("#avatar").length > 0) {
+                let id = $("#avatar").attr("class");
+                window.location.href = "users/" + id + "/post";
+            } else {
+                let isLogin = confirm("需要登录，是否跳转到登录页面？");
+                if (isLogin) {
+                    window.location.href = "login";
+                }
+            }
         })
     </script>
 </body>

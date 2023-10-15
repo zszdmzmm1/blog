@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.List;
+
 
 @Controller
 @EnableWebMvc
@@ -55,9 +57,12 @@ public class BlogController {
     }
 
     @PostMapping("posts/search")
-    @ResponseBody
-    public R search(@RequestBody Post post) {
-        return R.ok(blogService.search(post));
+    public R search(@RequestBody String key) {
+        Post post = new Post();
+        post.setTitle(key);
+        post.setDescription(key);
+        List<Post> posts = blogService.search(post);
+        return R.ok(posts);
     }
 
     @GetMapping("login")
@@ -71,27 +76,27 @@ public class BlogController {
         R response = blogService.login(email, password);
         if (response.getCode() == 200) {
             session.setAttribute("user", response.getData());
+            Cookie cookie;
+            Cookie cookie1;
+            Cookie cookie2;
             if ("true".equals(isRemember)) {
-                Cookie cookie = new Cookie("email", email);
-                Cookie cookie1 = new Cookie("password", password);
-                Cookie cookie2 = new Cookie("isChecked", "checked");
+                cookie = new Cookie("email", email);
+                cookie1 = new Cookie("password", password);
+                cookie2 = new Cookie("isChecked", "checked");
                 cookie.setMaxAge(60 * 60 * 12);
                 cookie1.setMaxAge(60 * 60 * 12);
                 cookie2.setMaxAge(60 * 60 * 12);
-                resp.addCookie(cookie);
-                resp.addCookie(cookie1);
-                resp.addCookie(cookie2);
             } else {
-                Cookie cookie = new Cookie("email", null);
-                Cookie cookie1 = new Cookie("password", null);
-                Cookie cookie2 = new Cookie("isChecked", null);
+                cookie = new Cookie("email", null);
+                cookie1 = new Cookie("password", null);
+                cookie2 = new Cookie("isChecked", null);
                 cookie.setMaxAge(0);
                 cookie1.setMaxAge(0);
                 cookie2.setMaxAge(0);
-                resp.addCookie(cookie);
-                resp.addCookie(cookie1);
-                resp.addCookie(cookie2);
             }
+            resp.addCookie(cookie);
+            resp.addCookie(cookie1);
+            resp.addCookie(cookie2);
         }
         return response;
     }
@@ -103,9 +108,20 @@ public class BlogController {
         return "forward:../page/user-info.jsp";
     }
 
+    @GetMapping("users/{id}")
+    public String userGet(@PathVariable String id, Model model) {
+        return user(id, model);
+    }
+
     @GetMapping("logout")
     @ResponseBody
     public void logout(HttpSession session) {
         session.setAttribute("user", null);
+    }
+
+    @GetMapping("users/{id}/post")
+    public String post(@PathVariable String id, Model model) {
+        model.addAttribute("id", id);
+        return "forward:../../page/add-post.jsp";
     }
 }

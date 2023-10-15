@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: 86173
-  Date: 2023/8/23
-  Time: 8:00
+  Date: 2023/10/16
+  Time: 4:56
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -10,9 +10,13 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <html>
 <head>
-    <title>个人主页</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <base href="http://localhost:8080/zszdmzmm_blog_war/">
     <link rel="stylesheet" href="build/assets/app.css">
+    <title>发布</title>
 </head>
 <body>
     <div class="vh-100 px-2 mb-5 d-flex flex-column justify-content-between">
@@ -47,48 +51,32 @@
                     <div class="col-lg-9 mt-3 mt-lg-0">
                         <div class="card shadow-sm">
                             <div class="card-header">
-                                个人资料
+                                文章发布
                             </div>
                             <div class="card-body">
-                                <p class="item">
-                                    用户名：<span>${user.getName()}</span>
-                                </p>
-                                <p class="item">
-                                    邮&emsp;箱：<span>${user.getEmail()}</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 mt-3 mt-lg-0">
-                            <div class="row card">
-                                <div class="card-header">
-                                    我的博客
-                                </div>
-                                <c:forEach items="${postList}" var="post" varStatus="status">
-                                    <div class="col-md-5 mb-5">
-                                        <article class="border-bottom h-100 pb-5  pt-md-0">
-                                            <div class="row justify-content-between">
-                                                <div class="col-7">
-                                                    <h2 class="mb-2 h5"><a class="text-inherit text-decoration-none link-body-emphasis" href="posts/${post.getPid()}">${post.getTitle()}</a></h2>
-                                                    <div class="small text-muted">
-                                                        <a href="posts/${post.getPid()}">${post.getUser().getName()}</a>
-                                                        <span> - </span>
-                                                        <span>${post.getPublishTime()} ${post.getLastUpdateTime()}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-5">
-                                                    <div class="d-flex">
-                                                        <a href="posts/${post.getPid()}" class="w-100">
-                                                            <img class="img-fluid shadow-sm rounded ratio-16x9" src="${post.getCover()}">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </article>
+                                <form method="post" enctype="multipart/form-data" action="posts">
+                                    <div class="mb-3">
+                                        <label for="article-title" class="form-label">标题</label>
+                                        <input type="email" class="form-control" id="article-title" name="title"
+                                               aria-describedby="emailHelp" required>
                                     </div>
-                                </c:forEach>
+                                    <div class="mb-3">
+                                        <label for="article-description" class="form-label">描述</label>
+                                        <input type="password" class="form-control" id="article-description" name="description">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formCover" class="form-label">选择你的封面</label>
+                                        <input class="form-control" type="file" id="formCover" accept="image/*" name="cover">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFile" class="form-label">选择你的markdown文件</label>
+                                        <input class="form-control" type="file" id="formFile" accept=".md" name="content">
+                                    </div>
+
+                                    <button id="submit" type="button" class="btn btn-primary">提交</button>
+                                </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </main>
@@ -105,6 +93,10 @@
                 .done(function () {
                     window.location.reload();
                 })
+        })
+
+        $("#submit").click(function () {
+
         })
     </script>
 </body>

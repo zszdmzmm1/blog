@@ -47,7 +47,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public List<Post> search(Post post) {
-        return search(post, 1, 4);
+        return search(post, 1, 8);
     }
 
     @Override
