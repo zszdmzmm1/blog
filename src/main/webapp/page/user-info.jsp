@@ -19,63 +19,7 @@
         <div>
             <header class="mb-5">
                 <!--            导航栏-->
-                <nav class="navbar navbar-expand-sm bg-body-tertiary mb-5 shadow">
-                    <div class="container-fluid">
-                        <div class="navbar-brand">
-                            <img src="image/blog/img.png" alt="头像" height="40">
-                            <a href="index.html"
-                               class="link-body-emphasis text-body-secondary text-decoration-none">我的主页</a>
-                        </div>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                            <div class="navbar-nav ms-auto">
-                                <div class="d-flex">
-                                    <i class="bi bi-box py-2 nav-item me-1"></i>
-                                    <a class="me-3 py-2 link-body-emphasis text-decoration-none nav-link"
-                                       href="resume/resume2.html">简历</a>
-                                </div>
-                                <div class="d-flex">
-                                    <i class="bi bi-journal-text py-2 nav-item me-1"></i>
-                                    <a class="me-3 py-2 link-body-emphasis text-decoration-none nav-link"
-                                       href="page/article.html">博客</a>
-                                </div>
-                                <div class="d-flex">
-                                    <i class="bi bi-github py-2 nav-item me-1"></i>
-                                    <div class="nav-item dropdown" onmouseleave="dropDownMenuHidden()"
-                                         onmouseenter="dropDownMenuShow()">
-                                        <a class="nav-link dropdown-toggle me-3 py-2 text-decoration-none link-body-emphasis"
-                                           href="https://github.com/zszdmzmm1" role="button"
-                                           data-bs-toggle="dropdown" aria-expanded="false">
-                                            GitHub
-                                        </a>
-                                        <ul id="dropdown" class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item"
-                                                   href="https://github.com/zszdmzmm1">个人主页</a>
-                                            </li>
-                                            <li>
-                                                <hr class="dropdown-divider">
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="https://github.com/zszdmzmm1/learnning">Java仓库</a>
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="https://github.com/zszdmzmm1/zszdmzmm-web">Web仓库</a>
-                                            </li>
-                                            <li><a class="dropdown-item"
-                                                   href="https://zszdmzmm1.github.io/bilibili-plugin/">bilibili插件介绍页</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                <jsp:include page="partials/header.jsp"/>
             </header>
             <main class="container user-center" id="main_content">
                 <div class="row">
@@ -83,15 +27,16 @@
                         <div class="card shadow-sm">
                             <div class="card-body">
                                 <div class="text-center">
-                                    <img src="image/blog/default-avatar.png" class="img-fluid rounded-circle avatar shadow-sm">
+                                    <img src="image/blog/default-avatar.png"
+                                         class="img-fluid rounded-circle avatar shadow-sm">
                                     <p class="text-muted font-size-14 mt-2 mb-2rem">${user.getName()}</p>
                                 </div>
 
                                 <ul class="nav flex-column">
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link active">
+                                        <a class="nav-link active" id="logout">
                                             <i class="bi bi-info-circle"></i>
-                                            个人资料
+                                            注销
                                         </a>
                                     </li>
                                 </ul>
@@ -113,6 +58,34 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="row card">
+                            <div class="card-header">
+                                我的博客
+                            </div>
+                            <c:forEach items="${postList}" var="post" varStatus="status">
+                                <div class="col-md-6 mb-5">
+                                    <article class="border-bottom h-100 pb-5  pt-md-0">
+                                        <div class="row justify-content-between">
+                                            <div class="col-7">
+                                                <h2 class="mb-2 h5"><a class="text-inherit text-decoration-none link-body-emphasis" href="posts/${post.getPid()}">${post.getTitle()}</a></h2>
+                                                <div class="small text-muted">
+                                                    <a href="posts/${post.getPid()}">${post.getUser().getName()}</a>
+                                                    <span> - </span>
+                                                    <span>${post.getPublishTime()} ${post.getLastUpdateTime()}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-5">
+                                                <div class="d-flex">
+                                                    <a href="posts/${post.getPid()}" class="w-100">
+                                                        <img class="img-fluid shadow-sm rounded ratio-16x9" src="${post.getCover()}">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
             </main>
@@ -121,12 +94,12 @@
     </div>
     <script src="build/assets/app.js"></script>
     <script>
-        $("#logout").click(function (){
+        $("#logout").click(function () {
             $.ajax({
                 method: "GET",
                 url: "logout",
             })
-                .done(function(){
+                .done(function () {
                     window.location.reload();
                 })
         })

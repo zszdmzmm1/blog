@@ -28,4 +28,6 @@ public interface BlogMapper {
     User selectUsersByEmail(String email);
 
     User selectUsersById();
+
+    int selectCountsOfPosts();
 }

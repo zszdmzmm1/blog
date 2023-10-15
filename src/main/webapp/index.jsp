@@ -18,7 +18,8 @@
                 <div class="container-fluid">
                     <div class="navbar-brand">
                         <img src="image/blog/img.png" alt="头像" height="40">
-                        <a href="#" class="link-body-emphasis text-body-secondary text-decoration-none">我的主页</a>
+                        <a href="index.jsp"
+                           class="link-body-emphasis text-body-secondary text-decoration-none">我的主页</a>
                     </div>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -69,9 +70,15 @@
                             </div>
 
                         </div>
-                        <button class="btn btn-outline-danger nav-item">
-                            <a href="./login" class="nav-link">登录</a>
-                        </button>
+                        <c:if test="${user == null}">
+                            <button class="btn btn-outline-danger nav-item">
+                                <a href="login" class="nav-link">登录</a>
+                            </button>
+                        </c:if>
+                        <c:if test="${user != null}">
+                            <img src="image/blog/10000007.48e72913..png" height="40">
+                        </c:if>
+
                     </div>
                 </div>
             </nav>

@@ -23,4 +23,8 @@ public interface BlogService {
     List<Post> search(Post post);
 
     R login(String email, String password);
+
+    List<Post> showByUser(int id);
+
+    int postsCount();
 }

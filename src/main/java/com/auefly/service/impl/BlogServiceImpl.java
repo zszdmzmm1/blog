@@ -62,6 +62,16 @@ public class BlogServiceImpl implements BlogService {
         }
     }
 
+    @Override
+    public List<Post> showByUser(int id) {
+        return mapper.selectPostsByUserId(id);
+    }
+
+    @Override
+    public int postsCount() {
+        return mapper.selectCountsOfPosts();
+    }
+
     public List<Post> search(Post post, int page, int perPage) {
         return mapper.selectPostsByConditions(post, (page - 1) * perPage, perPage);
     }

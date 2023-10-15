@@ -1,7 +1,6 @@
 package com.auefly.controller;
 
 import com.auefly.pojo.Post;
-import com.auefly.pojo.User;
 import com.auefly.service.BlogService;
 import com.auefly.util.R;
 import jakarta.servlet.http.Cookie;
@@ -23,8 +22,11 @@ public class BlogController {
     private BlogService blogService;
 
     @GetMapping("posts")
-    public String index(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "4") int perPage, Model model) {
+    public String index(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "8") int perPage, Model model) {
         model.addAttribute("msg", R.ok(blogService.index(page, perPage)));
+        model.addAttribute("page", page);
+        int counts = blogService.postsCount();
+        model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
         return "forward:page/posts.jsp";
     }
 
@@ -94,13 +96,16 @@ public class BlogController {
         return response;
     }
 
-    @PostMapping("users/*")
-    public String user() {
+    @PostMapping("users/{id}")
+    public String user(@PathVariable String id, Model model) {
+        int userId = Integer.parseInt(id);
+        model.addAttribute("postList", blogService.showByUser(userId));
         return "forward:../page/user-info.jsp";
     }
 
     @GetMapping("logout")
-    public void logout(HttpSession session){
+    @ResponseBody
+    public void logout(HttpSession session) {
         session.setAttribute("user", null);
     }
 }

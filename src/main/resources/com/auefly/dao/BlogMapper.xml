@@ -118,4 +118,8 @@
         select * from user where uid = #{id};
     </select>
 
+    <select id="selectCountsOfPosts" resultType="java.lang.Integer">
+        select count(*) from post;
+    </select>
+
 </mapper>
