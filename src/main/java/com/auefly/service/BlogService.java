@@ -1,6 +1,7 @@
 package com.auefly.service;
 
 import com.auefly.pojo.Post;
+import com.auefly.util.R;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface BlogService {
     int delete(int id);
 
     List<Post> search(Post post);
+
+    R login(String email, String password);
 }

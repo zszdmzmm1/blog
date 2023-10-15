@@ -2,12 +2,15 @@ package com.auefly.service.impl;
 
 import com.auefly.dao.BlogMapper;
 import com.auefly.pojo.Post;
+import com.auefly.pojo.User;
 import com.auefly.service.BlogService;
 import com.auefly.util.MarkdownFraser;
+import com.auefly.util.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class BlogServiceImpl implements BlogService {
     @Autowired
@@ -45,6 +48,18 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<Post> search(Post post) {
         return search(post, 1, 4);
+    }
+
+    @Override
+    public R login(String email, String password) {
+        User user = mapper.selectUsersByEmail(email);
+        if (user == null) {
+            return R.fail("邮箱不存在");
+        } else if (user.getPassword().equals(password)) {
+            return R.ok(user);
+        } else {
+            return R.fail("密码错误");
+        }
     }
 
     public List<Post> search(Post post, int page, int perPage) {

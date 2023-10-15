@@ -1,5 +1,6 @@
 package com.auefly.util;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ public class R {
 
     private String msg;
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object data;
 
     public static R ok() {
