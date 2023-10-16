@@ -244,9 +244,8 @@
             if (isConfirm) {
                 let id = $(this).parent().parent().attr("id");
                 $.ajax({
-                    method: "GET",
-                    url: "delete",
-                    data: {id: id}
+                    method: "DELETE",
+                    url: "posts/" + id,
                 })
                     .done(function () {
                         window.location.reload();
@@ -322,8 +321,8 @@
                         });
                         let sId = String(ids);
                         $.ajax({
-                            method: "GET",
-                            url: "deleteUsers",
+                            method: "POST",
+                            url: "delete-posts",
                             data: {sId: sId}
                         })
                             .done(function (){

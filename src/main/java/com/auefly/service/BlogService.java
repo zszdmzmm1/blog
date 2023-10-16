@@ -32,4 +32,11 @@ public interface BlogService {
     List<User> getAPageUser(int page, int perPage);
 
     int usersCount();
+
+    @Transactional
+    int deletePosts(int... ids);
+
+    @Transactional
+    int deletePosts(List<Integer> ids);
+
 }

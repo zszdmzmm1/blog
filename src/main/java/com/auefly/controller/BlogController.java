@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -57,6 +58,17 @@ public class BlogController {
     @ResponseBody
     public R delete(@PathVariable int id) {
         return R.ok(blogService.delete(id));
+    }
+
+    @PostMapping("delete-posts")
+    @ResponseBody
+    public R delete(@RequestParam String sId) {
+        String[] idArray = sId.split(",");
+        int[] id = new int[idArray.length];
+        for (int i = 0; i < idArray.length; i++) {
+            id[i] = Integer.parseInt(idArray[i]);
+        }
+        return R.ok(blogService.deletePosts(id));
     }
 
     @PostMapping("posts/search")

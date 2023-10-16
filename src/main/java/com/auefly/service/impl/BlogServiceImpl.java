@@ -81,6 +81,16 @@ public class BlogServiceImpl implements BlogService {
         return mapper.selectCountsOfUsers();
     }
 
+    @Override
+    public int deletePosts(int... ids) {
+        return mapper.deletePosts(ids);
+    }
+
+    @Override
+    public int deletePosts(List<Integer> ids) {
+        return mapper.deletePosts(ids);
+    }
+
     public List<Post> search(Post post, int page, int perPage) {
         return mapper.selectPostsByConditions(post, (page - 1) * perPage, perPage);
     }

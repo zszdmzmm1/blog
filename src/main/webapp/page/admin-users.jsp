@@ -68,13 +68,13 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
                         <li class="nav-item">
-                            <a href="dashboard.jsp" class="nav-link  active">
+                            <a href="dashboard.jsp" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin/users" class="nav-link ">
+                            <a href="admin/users" class="nav-link active">
                                 <i class="nav-icon fas fa-users"></i>
                                 <p>Users</p>
                             </a>
