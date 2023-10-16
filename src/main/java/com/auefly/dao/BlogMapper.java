@@ -30,4 +30,8 @@ public interface BlogMapper {
     User selectUsersById();
 
     int selectCountsOfPosts();
+
+    List<User> getAPageUser(@Param("offset") int offset, @Param("rowCount") int rowCount);
+
+    int selectCountsOfUsers();
 }

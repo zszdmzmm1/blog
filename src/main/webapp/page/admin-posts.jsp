@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: 86173
-  Date: 2023/8/23
-  Time: 15:58
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
@@ -15,99 +8,88 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>管理员控制台</title>
-    <base href="http://localhost:8080/zszdmzmm_web2_war/">
+    <base href="http://localhost:8080/zszdmzmm_blog_war/">
     <link rel="stylesheet" href="build/assets/app.css">
+    <link rel="stylesheet" href="vendor/adminlte/fonts/fonts.css">
+    <link rel="stylesheet" href="vendor/adminlte/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 </head>
-<body class="sidebar-mini" style="height: auto;">
+<body class="hold-transition sidebar-mini">
+    <!-- Site wrapper -->
     <div class="wrapper">
-
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light px-2">
-
-
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="">收</i></a>
-                </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <span href="login" class="nav-link" id="logout">退出登录</span>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
             </ul>
+
+            <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <span class="nav-item text-body-secondary">登陆人数:${totalNumberOfLoginUser}</span>
+                <li class="nav-item dropdown user-menu">
+                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <img src="../img/default-avatar.png" class="user-image img-circle elevation-2" alt="User Image">
+                        <span class="d-none d-md-inline">${user.getName()}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                        <!-- User image -->
+                        <li class="user-header bg-gray-light">
+                            <img src="../img/default-avatar.png" class="img-circle elevation-2" alt="User Image">
+                            <p>${user.getName()}</p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                            <a href="#" class="btn btn-default btn-flat float-right">
+                                退出
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </nav>
+        <!-- /.navbar -->
 
-
+        <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="#" target="_blank" class="brand-link">
+                <img src="../img/logo-short.svg" alt="example"
+                     class="brand-image mr-3">
+                <span class="brand-text font-weight-light">Demo</span>
+            </a>
 
+            <!-- Sidebar -->
             <div class="sidebar">
-
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="./image/QQ图片20230720103937.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a href="#" class="d-block">管理员</a>
-                    </div>
-                </div>
-
+                <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
-
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a href="dashboard.jsp" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
+                                <p>Dashboard</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v1</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v2</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Dashboard v3</p>
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-                        <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
-                                <i class="nav-icon far fa-plus-square"></i>
-                                <p>
-                                    管理员
-                                    <i class="fas fa-angle-left right"></i>
-                                </p>
+                        <li class="nav-item">
+                            <a href="admin/users" class="nav-link ">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Users</p>
                             </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a href="../examples/blank.html" class="nav-link active">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>用户列表</p>
-                                    </a>
-                                </li>
-                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="admin/posts" class="nav-link active">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Posts</p>
+                            </a>
                         </li>
                     </ul>
                 </nav>
-
+                <!-- /.sidebar-menu -->
             </div>
-
+            <!-- /.sidebar -->
         </aside>
 
         <div class="content-wrapper" style="min-height: 1604.44px;">
@@ -149,12 +131,12 @@
                                             <form class="border border-1 rounded-2 p-4 my-3 bg-light update_form"
                                                   id="add">
                                                 <div class="mb-3 text-start">
-                                                    <label for="add-email" class="form-label d-inline">邮箱</label>
+                                                    <label for="add-email" class="form-label d-inline">标题</label>
                                                     <input type="email" class="form-control" id="add-email"
                                                            aria-describedby="emailHelp">
                                                 </div>
                                                 <div class="mb-3 text-start">
-                                                    <label for="add-password" class="form-label">密码</label>
+                                                    <label for="add-password" class="form-label">最近更新时间</label>
                                                     <input type="password" class="form-control" id="add-password">
                                                 </div>
                                                 <div class="d-flex justify-content-start">
@@ -169,11 +151,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${userList}" var="user" varStatus="status">
-                                <tr id="${user.getId()}">
+                            <c:forEach items="${postList}" var="post" varStatus="status">
+                                <tr id="${post.getPid()}">
                                     <td>${status.count + (page - 1) * 10}</td>
-                                    <td>${user.getEmail()}</td>
-                                    <td>${user.getPassword()}</td>
+                                    <td>${post.getTitle()}</td>
+                                    <td>${post.getLastUpdateTime()}</td>
                                     <td class="text-end">
                                         <button class="btn btn-default" type="button" data-bs-toggle="offcanvas"
                                                 data-bs-target="#staticBackdrop1" aria-controls="staticBackdrop">
@@ -188,12 +170,12 @@
                                             </div>
                                             <div class="offcanvas-body">
                                                 <form class="border border-1 rounded-2 p-2 my-3 bg-light update_form"
-                                                      id="${user.getId()}">
+                                                      id="${post.getPid()}">
                                                     <div class="mb-3">
-                                                        <label for="update-${user.getId()}"
+                                                        <label for="update-${post.getPid()}"
                                                                class="form-label">邮箱</label>
                                                         <input type="email" class="form-control"
-                                                               id="update-${user.getId()}"
+                                                               id="update-${post.getPid()}"
                                                                placeholder="不填写可保持不变">
                                                     </div>
                                                     <div class="mb-3">
@@ -202,7 +184,7 @@
                                                                placeholder="不填写可保持不变">
                                                     </div>
                                                     <button type="button" class="btn btn-primary update"
-                                                            id="${user.getId()}-submit">更新
+                                                            id="${post.getPid()}-submit">更新
                                                     </button>
                                                 </form>
                                             </div>
@@ -227,7 +209,7 @@
                             </a>
                         </li>
                     </c:if>
-                    <li class="page-item"><span class="page-link">${page}</span></li>
+                    <li class="page-item"><span class="page-link" id="current-page">${page}</span></li>
                     <c:if test="${page != pageCount && pageCount != 0}">
                         <li class="page-item">
                             <a class="page-link" aria-label="Next">
@@ -245,20 +227,15 @@
     <script src="build/assets/app.js"></script>
     <script>
         $(".page-link").click(function () {
-            let page = ${page};
-            let email = "${sEmail}";
+            let page = parseInt($("#current-page").text());
             if ($(this).attr("aria-label") === "Next") {
-                page += 1;
+                page = page + 1;
             } else if ($(this).attr("aria-label") === "Previous") {
-                page -= 1;
+                page = page - 1;
             } else {
                 page = parseInt($(this).text());
             }
-            if(email === ""){
-                window.location.href = "admin/user?page=" + page;
-            }else{
-                window.location.href = "admin/user?page=" + page + "&sEmail=" + email;
-            }
+            window.location.href = "admin/posts?page=" + page;
         })
 
 

@@ -3,6 +3,7 @@ package com.auefly.controller;
 import com.auefly.pojo.Post;
 import com.auefly.service.BlogService;
 import com.auefly.util.R;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 @Controller
 @EnableWebMvc
 @EnableTransactionManagement
+@MultipartConfig
 public class BlogController {
     @Autowired
     private BlogService blogService;
@@ -34,8 +37,8 @@ public class BlogController {
 
     @PostMapping("posts")
     @ResponseBody
-    public R store(@RequestBody Post post) {
-        return R.ok(blogService.store(post));
+    public R store(@RequestPart MultipartFile cover, @RequestPart MultipartFile content, @RequestParam String title, @RequestParam String description) {
+        return R.ok(blogService.store(new Post()));
     }
 
     @GetMapping("posts/{id}")
@@ -113,6 +116,31 @@ public class BlogController {
         return user(id, model);
     }
 
+    @GetMapping("admin/users")
+    public String adminUser(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int perPage, Model model) {
+        model.addAttribute("userList", blogService.getAPageUser(page, perPage));
+        model.addAttribute("page", page);
+        int counts = blogService.usersCount();
+        model.addAttribute("count", counts);
+        model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
+        return "forward:../page/admin-users.jsp";
+    }
+
+    @GetMapping("admin/posts")
+    public String adminPost(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int perPage, Model model) {
+        model.addAttribute("postList", blogService.index(page, perPage));
+        model.addAttribute("page", page);
+        int counts = blogService.postsCount();
+        model.addAttribute("count", counts);
+        model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
+        return "forward:../page/admin-posts.jsp";
+    }
+
+    @GetMapping("admin")
+    public String admin() {
+        return "forward:./page/dashboard.jsp";
+    }
+
     @GetMapping("logout")
     @ResponseBody
     public void logout(HttpSession session) {
@@ -123,5 +151,10 @@ public class BlogController {
     public String post(@PathVariable String id, Model model) {
         model.addAttribute("id", id);
         return "forward:../../page/add-post.jsp";
+    }
+
+    @GetMapping("register")
+    public String register() {
+        return "forward:./page/register.jsp";
     }
 }

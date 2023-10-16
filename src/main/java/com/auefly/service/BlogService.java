@@ -1,6 +1,7 @@
 package com.auefly.service;
 
 import com.auefly.pojo.Post;
+import com.auefly.pojo.User;
 import com.auefly.util.R;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,4 +28,8 @@ public interface BlogService {
     List<Post> showByUser(int id);
 
     int postsCount();
+
+    List<User> getAPageUser(int page, int perPage);
+
+    int usersCount();
 }

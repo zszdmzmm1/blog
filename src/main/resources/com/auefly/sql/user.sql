@@ -11,7 +11,7 @@ create table if not exists user
 truncate table user;
 
 INSERT INTO blog.user (name, email, password, role)
-VALUES ('admin', 'admin@qq.com', 'secret', '"管理员"');
+VALUES ('admin', 'admin@qq.com', 'secret', '管理员');
 
 INSERT INTO blog.user (name, email, password, role)
-VALUES ('user', 'user@qq.com', '123456', '"用户"');
+VALUES ('user', 'user@qq.com', '123456', '用户');

@@ -118,8 +118,18 @@
         select * from user where uid = #{id};
     </select>
 
+    <select id="getAPageUser" resultType="User">
+        select *
+        from user
+        limit #{offset}, #{rowCount}
+    </select>
+
     <select id="selectCountsOfPosts" resultType="java.lang.Integer">
         select count(*) from post;
+    </select>
+
+    <select id="selectCountsOfUsers" resultType="java.lang.Integer">
+        select count(*) from user;
     </select>
 
 </mapper>

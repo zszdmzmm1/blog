@@ -42,6 +42,9 @@
                                 </ul>
                             </div>
                         </div>
+                        <c:if test="${user.getRole() == '管理员'}">
+                            <button class="btn btn-primary" id="control">控制面板</button>
+                        </c:if>
                     </div>
 
                     <div class="col-lg-9 mt-3 mt-lg-0">
@@ -58,29 +61,37 @@
                                 </p>
                             </div>
                         </div>
-                        <div class="col-lg-9 mt-3 mt-lg-0">
-                            <div class="row card">
+
+                        <div class="mt-3 mt-lg-0">
+                            <div class="card">
                                 <div class="card-header">
                                     我的博客
                                 </div>
                                 <c:forEach items="${postList}" var="post" varStatus="status">
-                                    <div class="col-md-5 mb-5">
+                                    <div class="mb-5">
                                         <article class="border-bottom h-100 pb-5  pt-md-0">
-                                            <div class="row justify-content-between">
-                                                <div class="col-7">
-                                                    <h2 class="mb-2 h5"><a class="text-inherit text-decoration-none link-body-emphasis" href="posts/${post.getPid()}">${post.getTitle()}</a></h2>
+                                            <div class="row justify-content-between p-3">
+                                                <div class="col-6">
+                                                    <h2 class="mb-2 h5"><a
+                                                            class="text-inherit text-decoration-none link-body-emphasis"
+                                                            href="posts/${post.getPid()}">${post.getTitle()}</a></h2>
                                                     <div class="small text-muted">
                                                         <a href="posts/${post.getPid()}">${post.getUser().getName()}</a>
                                                         <span> - </span>
                                                         <span>${post.getPublishTime()} ${post.getLastUpdateTime()}</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-5">
+                                                <div class="col-4">
                                                     <div class="d-flex">
                                                         <a href="posts/${post.getPid()}" class="w-100">
-                                                            <img class="img-fluid shadow-sm rounded ratio-16x9" src="${post.getCover()}">
+                                                            <img class="img-fluid shadow-sm rounded ratio-16x9"
+                                                                 src="${post.getCover()}">
                                                         </a>
                                                     </div>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn-danger" id="delete">-</button>
+                                                    <button class="btn btn-danger" id="update">u</button>
                                                 </div>
                                             </div>
                                         </article>
@@ -105,6 +116,10 @@
                 .done(function () {
                     window.location.reload();
                 })
+        })
+
+        $("#control").click(function () {
+            window.location.href = "admin";
         })
     </script>
 </body>

@@ -14,6 +14,7 @@ public class User {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    private String role;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Post> postList;
