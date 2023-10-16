@@ -1,6 +1,7 @@
 package com.auefly.controller;
 
 import com.auefly.pojo.Post;
+import com.auefly.pojo.User;
 import com.auefly.service.BlogService;
 import com.auefly.util.R;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,9 +37,18 @@ public class BlogController {
     }
 
     @PostMapping("posts")
-    @ResponseBody
-    public R store(@RequestPart MultipartFile cover, @RequestPart MultipartFile content, @RequestParam String title, @RequestParam String description) {
-        return R.ok(blogService.store(new Post()));
+    public String store(@RequestPart MultipartFile cover, @RequestParam String content, @RequestParam String title, @RequestParam String description, HttpSession session) {
+        User user = (User)session.getAttribute("user");
+        System.out.println(content);
+        Post post = new Post();
+        post.setContent(content);
+        post.setTitle(title);
+        post.setDescription(description);
+        String originalFilename = cover.getOriginalFilename();
+        post.setCover(originalFilename);
+        post.setUserId(user.getUid());
+        blogService.store(post);
+        return "redirect:./admin/posts";
     }
 
     @GetMapping("posts/{id}")
@@ -146,6 +155,11 @@ public class BlogController {
         model.addAttribute("count", counts);
         model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
         return "forward:../page/admin-posts.jsp";
+    }
+
+    @GetMapping("admin/add-post")
+    public String addPost() {
+        return "forward:../page/admin-add-post.jsp";
     }
 
     @GetMapping("admin")

@@ -30,13 +30,15 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <img src="../img/default-avatar.png" class="user-image img-circle elevation-2" alt="User Image">
+                        <a href="admin/add-post" class="me-2 d-none d-md-inline">新建文章</a>
+                        <img src="image/blog/default-avatar.png" class="user-image img-circle elevation-2"
+                             alt="User Image">
                         <span class="d-none d-md-inline">${user.getName()}</span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                         <!-- User image -->
                         <li class="user-header bg-gray-light">
-                            <img src="../img/default-avatar.png" class="img-circle elevation-2" alt="User Image">
+                            <img src="image/blog/default-avatar.png" class="img-circle elevation-2" alt="User Image">
                             <p>${user.getName()}</p>
                         </li>
                         <!-- Menu Footer-->
@@ -91,61 +93,23 @@
             </div>
             <!-- /.sidebar -->
         </aside>
-
         <div class="content-wrapper" style="min-height: 1604.44px;">
             <div class="card">
                 <div class="card-header">
                     <h1 class="card-title text-bold text-secondary display-5">用户列表</h1>
-                    <div class="card-tools">
-                        <div class="input-group input-group-sm" style="width: 300px; height: 50px">
-                            <input type="text" name="table_search" class="form-control"
-                                   placeholder="Search" id="user-search">
-                            <div class="input-group-append">
-                                <button type="button" class="btn btn-default" id="user-search-btn">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover table-striped text-nowrap">
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>邮箱</th>
-                                <th>密码</th>
+                                <th>标题</th>
+                                <th>最近更新时间</th>
                                 <th class="text-end">
                                     <button class="btn btn-default" type="button" data-bs-toggle="offcanvas"
                                             data-bs-target="#staticBackdrop" aria-controls="staticBackdrop">
                                         添加
                                     </button>
-                                    <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1"
-                                         id="staticBackdrop" aria-labelledby="staticBackdropLabel">
-                                        <div class="offcanvas-header">
-                                            <h5 class="offcanvas-title" id="staticBackdropLabel">添加用户</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="offcanvas-body">
-                                            <form class="border border-1 rounded-2 p-4 my-3 bg-light update_form"
-                                                  id="add">
-                                                <div class="mb-3 text-start">
-                                                    <label for="add-email" class="form-label d-inline">标题</label>
-                                                    <input type="email" class="form-control" id="add-email"
-                                                           aria-describedby="emailHelp">
-                                                </div>
-                                                <div class="mb-3 text-start">
-                                                    <label for="add-password" class="form-label">最近更新时间</label>
-                                                    <input type="password" class="form-control" id="add-password">
-                                                </div>
-                                                <div class="d-flex justify-content-start">
-                                                    <button type="button" class="btn btn-primary" id="add-submit">添加
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
                                     <button class="btn btn-default" id="mul-delete">多选</button>
                                 </th>
                             </tr>
@@ -161,34 +125,6 @@
                                                 data-bs-target="#staticBackdrop1" aria-controls="staticBackdrop">
                                             更新
                                         </button>
-                                        <div class="offcanvas offcanvas-end" data-bs-backdrop="static" tabindex="-1"
-                                             id="staticBackdrop1" aria-labelledby="staticBackdropLabel">
-                                            <div class="offcanvas-header">
-                                                <h5 class="offcanvas-title" id="staticBackdropLabel1">更新用户信息</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                                        aria-label="Close"></button>
-                                            </div>
-                                            <div class="offcanvas-body">
-                                                <form class="border border-1 rounded-2 p-2 my-3 bg-light update_form"
-                                                      id="${post.getPid()}">
-                                                    <div class="mb-3">
-                                                        <label for="update-${post.getPid()}"
-                                                               class="form-label">邮箱</label>
-                                                        <input type="email" class="form-control"
-                                                               id="update-${post.getPid()}"
-                                                               placeholder="不填写可保持不变">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">密码</label>
-                                                        <input type="text" class="form-control"
-                                                               placeholder="不填写可保持不变">
-                                                    </div>
-                                                    <button type="button" class="btn btn-primary update"
-                                                            id="${post.getPid()}-submit">更新
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
                                         <button class="delete btn btn-default">删除</button>
                                     </td>
                                 </tr>
@@ -308,15 +244,15 @@
         })
 
 
-        $("#mul-delete").click(function (){
-            if($("#confirm-mul-delete").length === 0){
+        $("#mul-delete").click(function () {
+            if ($("#confirm-mul-delete").length === 0) {
                 $(this).after(`<button class="btn btn-default" id="confirm-mul-delete">删除</button>`);
                 $(".delete").after(`<input type="checkbox" class="checkbox delete-check"/>`);
-                $("#confirm-mul-delete").click(function (){
+                $("#confirm-mul-delete").click(function () {
                     let isConfirm = confirm("是否确定删除？");
-                    if(isConfirm){
+                    if (isConfirm) {
                         let ids = [];
-                        $(".delete-check:checked").each(function (){
+                        $(".delete-check:checked").each(function () {
                             ids.push($(this).parent().parent().attr("id"));
                         });
                         let sId = String(ids);
@@ -325,13 +261,13 @@
                             url: "delete-posts",
                             data: {sId: sId}
                         })
-                            .done(function (){
+                            .done(function () {
                                 window.location.reload();
                                 alert("删除成功");
                             })
                     }
                 })
-            } else{
+            } else {
                 $("#confirm-mul-delete").remove();
                 $(".delete-check").remove();
             }

@@ -23,9 +23,6 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public int store(Post post) {
-        String mdContent = post.getContent();
-        String htmlContent = MarkdownFraser.fraser(mdContent);
-        post.setContent(htmlContent);
         return mapper.addPost(post);
     }
 
