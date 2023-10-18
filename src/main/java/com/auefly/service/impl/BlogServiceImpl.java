@@ -88,6 +88,11 @@ public class BlogServiceImpl implements BlogService {
         return mapper.deletePosts(ids);
     }
 
+    @Override
+    public Post selectPostById(int id) {
+        return mapper.selectPostById(id);
+    }
+
     public List<Post> search(Post post, int page, int perPage) {
         return mapper.selectPostsByConditions(post, (page - 1) * perPage, perPage);
     }

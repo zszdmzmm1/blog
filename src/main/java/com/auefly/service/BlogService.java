@@ -39,4 +39,5 @@ public interface BlogService {
     @Transactional
     int deletePosts(List<Integer> ids);
 
+    Post selectPostById (int id);
 }

@@ -6,6 +6,7 @@ import com.auefly.service.BlogService;
 import com.auefly.util.R;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class BlogController {
 
     @PostMapping("posts")
     public String store(@RequestPart MultipartFile cover, @RequestParam String content, @RequestParam String title, @RequestParam String description, HttpSession session) {
-        User user = (User)session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
         System.out.println(content);
         Post post = new Post();
         post.setContent(content);
@@ -156,6 +157,24 @@ public class BlogController {
         model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
         return "forward:../page/admin-posts.jsp";
     }
+
+    @GetMapping("admin/posts/{id}/edit")
+    public String postEdit(@PathVariable int id, Model model) {
+        Post post = blogService.selectPostById(id);
+        model.addAttribute("post", post);
+        return "forward:../../../page/admin-update-post.jsp";
+    }
+
+    @PostMapping("admin/posts/{id}")
+    public String postUpdate(@PathVariable int id, @RequestParam String content, @RequestParam String title, @RequestParam String description, HttpServletRequest request) {
+        Post post = new Post();
+        post.setContent(content);
+        post.setTitle(title);
+        post.setDescription(description);
+        blogService.update(id, post);
+        return "redirect:./admin/posts";
+    }
+
 
     @GetMapping("admin/add-post")
     public String addPost() {
