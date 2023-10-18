@@ -62,15 +62,18 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="article-description" class="form-label">描述</label>
-                                        <input type="password" class="form-control" id="article-description" name="description">
+                                        <input type="password" class="form-control" id="article-description"
+                                               name="description">
                                     </div>
                                     <div class="mb-3">
                                         <label for="formCover" class="form-label">选择你的封面</label>
-                                        <input class="form-control" type="file" id="formCover" accept="image/*" name="cover">
+                                        <input class="form-control" type="file" id="formCover" accept="image/*"
+                                               name="cover">
                                     </div>
                                     <div class="mb-3">
                                         <label for="formFile" class="form-label">选择你的markdown文件</label>
-                                        <input class="form-control" type="file" id="formFile" accept=".md" name="content">
+                                        <input class="form-control" type="file" id="formFile" accept=".md"
+                                               name="content">
                                     </div>
 
                                     <button id="submit" type="button" class="btn btn-primary">提交</button>
