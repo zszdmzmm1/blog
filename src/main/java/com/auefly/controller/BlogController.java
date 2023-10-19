@@ -181,9 +181,9 @@ public class BlogController {
         return "forward:../page/admin-add-post.jsp";
     }
 
-    @GetMapping("admin")
+    @GetMapping("admin/dashboard")
     public String admin() {
-        return "forward:./page/dashboard.jsp";
+        return "forward:../page/dashboard.jsp";
     }
 
     @GetMapping("logout")

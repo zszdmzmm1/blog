@@ -119,7 +119,7 @@
         })
 
         $("#control").click(function () {
-            window.location.href = "admin";
+            window.location.href = "admin/dashboard";
         })
     </script>
 </body>
