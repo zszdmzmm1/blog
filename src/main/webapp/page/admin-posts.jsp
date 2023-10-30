@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="build/assets/app.css">
     <link rel="stylesheet" href="vendor/adminlte/fonts/fonts.css">
     <link rel="stylesheet" href="vendor/adminlte/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->
@@ -39,9 +38,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${postList}" var="post" varStatus="status">
+                                <c:forEach items="${postList.getT()}" var="post" varStatus="status">
                                     <tr id="${post.getPid()}" class="post-id">
-                                        <td>${status.count + (page - 1) * 10}</td>
+                                        <td>${status.count + (postList.getPage() - 1) * 10}</td>
                                         <td>${post.getTitle()}</td>
                                         <td>${post.getLastUpdateTime()}</td>
                                         <td class="text-end">
@@ -54,20 +53,20 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <span class="text-secondary">当前第${page}页，总计${pageCount}页，共${count}条记录</span>
+                        <span class="text-secondary">当前第${postList.getPage()}页，总计${postList.getTotalPage()}页，共${postList.getCount()}条记录</span>
                     </div>
                 </div>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <c:if test="${page != 1}">
+                        <c:if test="${postList.getPage() != 1}">
                             <li class="page-item">
                                 <a class="page-link" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                         </c:if>
-                        <li class="page-item"><span class="page-link" id="current-page">${page}</span></li>
-                        <c:if test="${page != pageCount && pageCount != 0}">
+                        <li class="page-item"><span class="page-link" id="current-page">${postList.getPage()}</span></li>
+                        <c:if test="${postList.getPage() != postList.getTotalPage() && postList.getTotalPage() != 0}">
                             <li class="page-item">
                                 <a class="page-link" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>

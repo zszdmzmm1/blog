@@ -1,6 +1,7 @@
 package com.auefly.service.impl;
 
 import com.auefly.dao.BlogMapper;
+import com.auefly.pojo.Page;
 import com.auefly.pojo.Post;
 import com.auefly.pojo.User;
 import com.auefly.service.BlogService;
@@ -17,8 +18,14 @@ public class BlogServiceImpl implements BlogService {
     private BlogMapper mapper;
 
     @Override
-    public List<Post> index(int page, int perPage) {
-        return mapper.selectPostsForIndexPage((page - 1) * perPage, perPage);
+    public Page<Post> index(int curPage, int perPage) {
+        Page<Post> page = new Page<>();
+        page.setT(mapper.selectPostsForIndexPage((curPage - 1) * perPage, perPage));
+        page.setPage(curPage);
+        int counts = mapper.selectCountsOfPosts();
+        page.setCount(counts);
+        page.setTotalPage((counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
+        return page;
     }
 
     @Override

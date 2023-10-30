@@ -30,10 +30,8 @@ public class BlogController {
 
     @GetMapping("posts")
     public String index(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "8") int perPage, Model model) {
-        model.addAttribute("msg", R.ok(blogService.index(page, perPage)));
-        model.addAttribute("page", page);
-        int counts = blogService.postsCount();
-        model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
+        model.addAttribute("msg", blogService.index(page, perPage));
+        System.out.println(blogService.index(page, perPage));
         return "forward:page/posts.jsp";
     }
 
@@ -149,12 +147,8 @@ public class BlogController {
     }
 
     @GetMapping("admin/posts")
-    public String adminPost(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "10") int perPage, Model model) {
+    public String adminPost(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "8") int perPage, Model model) {
         model.addAttribute("postList", blogService.index(page, perPage));
-        model.addAttribute("page", page);
-        int counts = blogService.postsCount();
-        model.addAttribute("count", counts);
-        model.addAttribute("pageCount", (counts % perPage == 0) ? (counts / perPage) : (counts / perPage + 1));
         return "forward:../page/admin-posts.jsp";
     }
 

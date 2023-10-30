@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="build/assets/app.css">
     <link rel="stylesheet" href="vendor/adminlte/fonts/fonts.css">
     <link rel="stylesheet" href="vendor/adminlte/plugins/fontawesome-free/css/all.min.css">
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 </head>
 <body class="hold-transition sidebar-mini">
     <!-- Site wrapper -->

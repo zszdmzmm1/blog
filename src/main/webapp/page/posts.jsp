@@ -27,7 +27,7 @@
     <div class="container" id="main_content">
         <div class="mx-lg-auto">
             <div class="row">
-                <c:forEach items="${msg.getData()}" var="post" varStatus="status">
+                <c:forEach items="${msg.getT()}" var="post" varStatus="status">
                     <div class="col-md-6 mb-5">
                         <article class="border-bottom h-100 pb-5  pt-md-0">
                             <div class="row justify-content-between">
@@ -56,15 +56,15 @@
             <div class="text-end">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
-                        <c:if test="${page != 1}">
+                        <c:if test="${msg.getPage() != 1}">
                             <li class="page-item">
                                 <a class="page-link" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                         </c:if>
-                        <li class="page-item"><span class="page-link" id="current-page">${page}</span></li>
-                        <c:if test="${page != pageCount && pageCount != 0}">
+                        <li class="page-item"><span class="page-link" id="current-page">${msg.getPage()}</span></li>
+                        <c:if test="${msg.getPage() != msg.totalPage() && msg.totalPage() != 0}">
                             <li class="page-item">
                                 <a class="page-link" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>

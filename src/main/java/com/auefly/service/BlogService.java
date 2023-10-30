@@ -1,5 +1,6 @@
 package com.auefly.service;
 
+import com.auefly.pojo.Page;
 import com.auefly.pojo.Post;
 import com.auefly.pojo.User;
 import com.auefly.util.R;
@@ -8,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface BlogService {
-    List<Post> index(int page, int perPage);
+    Page<Post> index(int page, int perPage);
 
     @Transactional
     int store(Post post);
